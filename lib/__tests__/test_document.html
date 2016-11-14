@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test form for Grimoire</title>
+</head>
+<body>
+<!-- Show if Radio A is selected -->
+<!-- Show if Radio C is selected, and #check is checked -->
+<label>
+  <input type="radio" name="radio" value="a">
+  Radio A
+</label>
+<label>
+  <input type="radio" name="radio" value="b" checked>
+  Radio B
+</label>
+<label>
+  <input type="radio" name="radio" value="c">
+  Radio C
+</label>
+<!-- Show if either of these text inputs say "parse" -->
+<input type="text" name="text">
+<input type="text" id="other_text">
+<label>
+  <input id="check" type="checkbox" name="check">
+  Checkbox
+</label>
+<!-- Show if check_one and check_two are checked -->
+<input type="checkbox" id="check_one">
+<input type="checkbox" id="check_two">
+<!-- Show if check_three is checked, and check_four is not -->
+<input type="checkbox" id="check_three">
+<input type="checkbox" id="check_four">
+<!-- Show if the cost input starts with a '$' -->
+<input type="text" id="cost">
+
+<div id="toggled">Hide and Seek</div>
+</body>
+</html>

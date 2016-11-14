@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Grimoire.js Examples</title>
+<link href='http://fonts.googleapis.com/css?family=Cinzel:400' rel='stylesheet' type='text/css'>
+<style>
+body {
+  background: #35383d;
+  box-sizing: border-box;
+}
+* {
+  box-sizing: inherit;
+}
+body, input {
+  font-family: "Palatino Linotype", Palatino, "Book Antiqua", Baskerville,
+    "Bookman Old Style", Garamond, Georgia, serif;
+}
+h1 {
+  font-family: Cinzel, Garamond, Georgia, serif;
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.example {
+  width: 500px;
+  padding: 20px;
+  margin: 40px auto 20px auto;
+  background: white;
+  border-radius: 5px;
+}
+p {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+}
+label input {
+  margin-right: 10px;
+  vertical-align: middle;
+  position: relative;
+  bottom: 1px;
+}
+.row:not(:last-child) {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+.half {
+  display: block;
+}
+.half:first-child {
+  width: 50%;
+  float: left;
+}
+.half + .half {
+  margin-left: 50%;
+}
+.row p:not(:last-child) {
+  margin-bottom: 10px;
+}
+input[type=text] {
+  border: 1px solid #bbb;
+  padding: 4px 4px;
+  outline: 0;
+  font-size: 14px;
+  width: 160px;
+}
+input[type=text]:focus {
+  border-color: #3c6add;
+}
+select {
+  font-size: 14px;
+  width: 160px;
+  border: 1px solid #bbb;
+}
+
+.code {
+  width: 500px;
+  background: #ddd;
+  margin: 0 auto 40px auto;
+  padding: 10px;
+}
+pre {
+  overflow: auto;
+  line-height: 20px;
+}
+h2 {
+  margin: 0;
+  font-size: 20px;
+}
+</style>
+</head>
+<body>
+<h1>Grimoire examples</h1>
+<div class="example" id="example_1">
+  <div class="row">
+    <p>Perhaps you want to collect the email addresses of all new users, but
+    only if they explicitly want your spam.</p>
+  </div>
+  <div class="row">
+    <label class="half">
+      <input type="checkbox" id="is_new_user">I'm a new user
+    </label>
+    <label class="half">
+      <input type="checkbox" id="no_spam">Please don&apos;t send me spam
+    </label>
+  </div>
+  <div class="row" id="email_field" style="display: none">
+    <p>Please enter your email address so we can send you spam</p>
+    <input name="email" type="text">
+  </div>
+  <div class="row" id="thanks" style="display: none">
+    <p style="text-align: center">Thank you!</p>
+  </div>
+</div>
+<div class="code">
+<h2>Code for example 1</h2>
+<pre>
+var Example1 = new Grimoire(
+  document.getElementById('example_1')
+);
+var newUserCheck = document.getElementById('is_new_user');
+var noSpamCheck = document.getElementById('no_spam');
+
+// Create a rule for collecting an email address
+// when a new user wants spam
+var emailRule = Example1.whenChecked(newUserCheck)
+  .whenUnchecked(noSpamCheck);
+emailRule.reveal(document.getElementById('email_field'));
+
+// We can build on top of emailRule:
+// Show the "Thank you" message when we collect the user's
+// email, and the value is a valid address
+emailRule.whenValue('email', function(val) {
+    return !!val.match(/^[^@]{2,}@[^@]{2,}\.[^@]{2,}$/);
+  }).reveal(document.getElementById('thanks'));
+</pre>
+</div>
+<div class="example" id="example_2">
+  <div class="row">
+    <p>Sometimes, inputs are only relevant when users make certain selections.
+    Selecting &ldquo;other&rdquo; might need further details.</p>
+  </div>
+  <div class="row">
+    <div class="half">
+      <p>What is your relation?</p>
+    </div>
+    <div class="half">
+      <select name="relationship">
+        <option value="mother">Mother</option>
+        <option value="father">Father</option>
+        <option value="brother">Brother</option>
+        <option value="sister">Sister</option>
+        <option value="grandmother">Grandmother</option>
+        <option value="grandfather">Grandfather</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+  </div>
+  <div id="other_context" style="display: none">
+    <div class="half" style="text-align: right; padding-right: 6px">
+      <p>Explain:</p>
+    </div>
+    <div class="half">
+      <input type="text">
+    </div>
+  </div>
+</div>
+<div class="code">
+<h2>Code for example 2</h2>
+<pre>
+var Example2 = new Grimoire(
+  document.getElementById('example_2')
+);
+
+// Show the explanation field when the user selects "other"
+Example2.whenValue('relationship', 'other')
+  .reveal(document.getElementById('other_context'));
+</pre>
+</div>
+<script src="grimoire.js"></script>
+<script>
+var Example1 = new Grimoire(document.getElementById('example_1'));
+var newUserCheck = document.getElementById('is_new_user');
+var noSpamCheck = document.getElementById('no_spam');
+
+var emailRule = Example1.whenChecked(newUserCheck).whenUnchecked(noSpamCheck);
+emailRule.reveal(document.getElementById('email_field'));
+
+// Build on top of emailRule to create a more restrictive rule
+emailRule.whenValue('email', function(val) {
+    return !!val.match(/^[^@]{2,}@[^@]{2,}\.[^@]{2,}$/);
+  }).reveal(document.getElementById('thanks'));
+
+var Example2 = new Grimoire(document.getElementById('example_2'));
+Example2.whenValue('relationship', 'other')
+  .reveal(document.getElementById('other_context'));
+</script>
+</body>
+</html>

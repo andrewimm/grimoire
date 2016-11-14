@@ -1,0 +1,25 @@
+{
+  "name": "input-grimoire",
+  "version": "1.0.0",
+  "description": "Rule-based DOM manipulation for dynamic forms and wizards",
+  "author": "Andrew Imm (https://github.com/andrewimm)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewimm/grimoire"
+  },
+  "homepage": "https://github.com/andrewimm/grimoire",
+  "bugs": "https://github.com/andrewimm/grimoire/issues",
+  "files": [
+    "lib/",
+    "index.js",
+    "README.md"
+  ],
+  "devDependencies": {
+    "jest": "^17.0.0",
+    "webpack": "^1.13.3"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "jest"
+  }
+}
